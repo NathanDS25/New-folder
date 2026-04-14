@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { AuthContext } from '../context/AuthContext';
 import { DollarSign, Bed, Users, AlertCircle } from 'lucide-react';
 
@@ -12,7 +12,7 @@ export default function AdminDashboard() {
       const fetchStats = async () => {
         try {
           const token = localStorage.getItem('token');
-          const res = await axios.get('http://localhost:5000/api/analytics', {
+          const res = await api.get('http://localhost:5000/api/analytics', {
             headers: { Authorization: `Bearer ${token}` }
           });
           setStats(res.data.data);

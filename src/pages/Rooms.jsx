@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { Users, Plus } from 'lucide-react';
 
 export default function Rooms() {
@@ -9,7 +9,7 @@ export default function Rooms() {
     const fetchRooms = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/rooms', {
+        const res = await api.get('http://localhost:5000/api/rooms', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setRooms(res.data.data);

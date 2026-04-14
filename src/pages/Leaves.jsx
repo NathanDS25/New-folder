@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { AuthContext } from '../context/AuthContext';
 import { FilePlus, Calendar, Clock, CheckCircle, XCircle, Send, X } from 'lucide-react';
 
@@ -22,7 +22,7 @@ export default function Leaves() {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/leaves', {
+      const res = await api.get('http://localhost:5000/api/leaves', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setLeaves(res.data.data || []);
@@ -37,7 +37,7 @@ export default function Leaves() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/leaves', formData, {
+      await api.post('http://localhost:5000/api/leaves', formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setShowApplyForm(false);
@@ -52,7 +52,7 @@ export default function Leaves() {
   const handleUpdateStatus = async (id, status) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/leaves/${id}`, { status }, {
+      await api.put(`http://localhost:5000/api/leaves/${id}`, { status }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchLeaves();

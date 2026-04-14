@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { AuthContext } from '../context/AuthContext';
 import { UserPlus, Clock, LogIn, LogOut, Search, User } from 'lucide-react';
 
@@ -22,7 +22,7 @@ export default function Visitors() {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/visitors', {
+      const res = await api.get('http://localhost:5000/api/visitors', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setVisitors(res.data.data || []);
@@ -37,7 +37,7 @@ export default function Visitors() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/visitors', formData, {
+      await api.post('http://localhost:5000/api/visitors', formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setShowAddForm(false);
@@ -52,7 +52,7 @@ export default function Visitors() {
   const handleClockOut = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/visitors/${id}`, {}, {
+      await api.put(`http://localhost:5000/api/visitors/${id}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchVisitors();
