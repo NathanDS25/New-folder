@@ -11,6 +11,12 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Ensure user has registered before allowing login
+      const hasRegistered = localStorage.getItem('hasRegistered');
+      if (!hasRegistered) {
+        navigate('/register');
+        return;
+      }
       await login(email, password);
       navigate('/dashboard');
     } catch (err) {

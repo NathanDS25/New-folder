@@ -1,10 +1,12 @@
 import { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import { AuthContext } from '../context/AuthContext';
 import { DollarSign, Bed, Users, AlertCircle } from 'lucide-react';
 
 export default function AdminDashboard() {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [stats, setStats] = useState(null);
 
   useEffect(() => {
@@ -24,6 +26,11 @@ export default function AdminDashboard() {
     }
   }, [user]);
 
+  if (!user) {
+    // No user logged in, redirect to registration page
+    navigate('/register');
+    return null;
+  }
   if (user?.role !== 'Admin') {
     return (
       <div className="bg-white p-12 rounded-2xl shadow-sm text-center">

@@ -14,6 +14,8 @@ export default function Register() {
     e.preventDefault();
     try {
       await register(name, email, password, role);
+      // Mark that user has registered
+      localStorage.setItem('hasRegistered', 'true');
       navigate('/dashboard');
     } catch (err) {
       alert('Registration failed');
